@@ -1,0 +1,41 @@
+/*
+  Warnings:
+
+  - The primary key for the `User` table will be changed. If it partially fails, the table could be left without primary key constraint.
+  - You are about to drop the column `email` on the `User` table. All the data in the column will be lost.
+  - You are about to drop the column `name` on the `User` table. All the data in the column will be lost.
+  - You are about to drop the `Post` table. If the table is not empty, all the data it contains will be lost.
+  - Added the required column `dorm` to the `User` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `group` to the `User` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `level` to the `User` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `speciality` to the `User` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `year` to the `User` table without a default value. This is not possible if the table is not empty.
+
+*/
+-- DropForeignKey
+ALTER TABLE "Post" DROP CONSTRAINT "Post_authorId_fkey";
+
+-- DropIndex
+DROP INDEX "User.email_unique";
+
+-- AlterTable
+ALTER TABLE "User" DROP CONSTRAINT "User_pkey",
+DROP COLUMN "email",
+DROP COLUMN "name",
+ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "dorm" TEXT NOT NULL,
+ADD COLUMN     "dormnum" INTEGER,
+ADD COLUMN     "group" TEXT NOT NULL,
+ADD COLUMN     "level" TEXT NOT NULL,
+ADD COLUMN     "prof" INTEGER,
+ADD COLUMN     "speciality" TEXT NOT NULL,
+ADD COLUMN     "stud" TEXT,
+ADD COLUMN     "updatedAt" TIMESTAMP(3),
+ADD COLUMN     "year" INTEGER NOT NULL,
+ALTER COLUMN "id" DROP DEFAULT,
+ALTER COLUMN "id" SET DATA TYPE TEXT,
+ADD CONSTRAINT "User_pkey" PRIMARY KEY ("id");
+DROP SEQUENCE "User_id_seq";
+
+-- DropTable
+DROP TABLE "Post";
