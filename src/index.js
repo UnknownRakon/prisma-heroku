@@ -11,7 +11,6 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(express.static('public'))
 
-
 app.get(`/api`, async (req, res) => {
   res.json({ up: true })
 })
@@ -44,6 +43,16 @@ app.put(`/api/updateUser/:id`, async (req, res) => {
     data: {
       ...req.body,
     },
+  })
+  res.json(result)
+})
+
+app.delete(`/api/delete/:id`, async (req, res) => {
+  const { id } = req.params
+  const result = await prisma.user.delete({
+    where: {
+      id: String(id),
+    }
   })
   res.json(result)
 })
