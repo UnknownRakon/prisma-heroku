@@ -11,6 +11,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(express.static('public'))
 
+
 app.get(`/api`, async (req, res) => {
   res.json({ up: true })
 })
